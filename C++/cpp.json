@@ -1,0 +1,14 @@
+{
+	"C++ Boiler Plate": {
+		"prefix": "!",
+		"body": [
+			"#include <iostream>",
+			"using namespace std;\n",
+			"int main() {",
+			"\t$0",
+			"\treturn 0;",
+			"}"
+		],
+		"description": "C++ Boiler Plate Code"
+	}
+}
