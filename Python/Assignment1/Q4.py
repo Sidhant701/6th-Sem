@@ -15,6 +15,8 @@ protected, and private attributes?'''
 
 
 # # Example: -
+# print('''Name: Sidhanta Barik, RegNo: 2241002049
+# -----------------------------------------''')
 # class MyClass:
 #     def __init__(self):
 #         self.public_attr = "Public attribute"
@@ -25,13 +27,19 @@ protected, and private attributes?'''
 #         return self.__private_attr
     
 # obj = MyClass()
-# print(obj.public_attr)  # Output: Public attribute
-# print(obj._protected_attr)  # Output: Protected attribute
-# print(obj.__private_attr)  # Error: AttributeError: 'MyClass' object has no attribute '__private_attr'
-# print(obj._MyClass__private_attr)  # Output: Private attribute
-# print(obj.get_private_attr())  # Output: Private attribute
+# print(obj.public_attr)  
+# print(obj._protected_attr) 
+# # print(obj.__private_attr)  
+# print(obj._MyClass__private_attr)
+# print(obj.get_private_attr())  
 
-
+# Name: Sidhanta Barik, RegNo: 2241002049
+# -----------------------------------------
+# Public attribute
+# Protected attribute
+# # AttributeError: 'MyClass' object has no attribute '__private_attr'.
+# Private attribute
+# Private attribute
 
 '''NOTE: The double underscore before the attribute name is used to invoke name mangling, which makes the attribute name unique to the class to avoid conflicts with subclasses. To access private attributes from outside the class, you can use the name mangling convention: _ClassName__private_attr.
 '''
