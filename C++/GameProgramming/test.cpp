@@ -17,7 +17,7 @@ int main()
 	Vector2u screenSize = window.getSize();
 
 	Color c(0,0,0);
-	Color yellow = Color::Blue;
+	Color blue = Color::Blue;
 	int radius = 150; // 150 is the radius in pixels.
 	int r = 150;
 	CircleShape circle1(radius);
@@ -29,7 +29,7 @@ int main()
 	CircleShape circle4(radius);
 	circle4.setFillColor(Color(255, 80, 0));
 	CircleShape circle5(r);
-	circle5.setFillColor(Color(yellow));
+	circle5.setFillColor(Color(blue));
 
 	cout<<"Circle Position x: "<<circle1.getPosition().x<<" y: "<<circle1.getPosition().y<<endl;
 
