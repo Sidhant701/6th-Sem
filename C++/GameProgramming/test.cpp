@@ -47,6 +47,12 @@ int main()
 	int x1 = 0, y1 = 0, x2 = 0, y2 = 0;
 	// The below while loop is used to keep the window open, or else the window opens and closes within a second.
 	while(window.isOpen()){
+		// Esc to Quit
+		Event event;
+		if(Keyboard::isKeyPressed(Keyboard::Escape)){
+			window.close();
+		}
+
 		// window.clear(Color::White); // Clears default styles. Adds new style (Color::<color>)
 		// window.clear(Color(45, 87, 107)); // Clears default styles. Adds new style (Color(r,g,b))
 		window.clear(Color(c));

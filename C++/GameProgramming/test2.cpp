@@ -68,6 +68,10 @@ int main(){
                 window.close();
             }
         }
+        // Esc to Quit
+		if(Keyboard::isKeyPressed(Keyboard::Escape)){
+			window.close();
+		}
         window.clear(c);
         drawGrid(window, 100);
         window.draw(circle1);
