@@ -11,8 +11,8 @@ Tasks:
 def recursive_sum(n):
     "(b)"
     if n == 1:
-        return 1
-    return n + recursive_sum(n-1)
+        return 1 # Base Case
+    return n + recursive_sum(n-1) # Recursive Step
 sum = recursive_sum(10)
 print(sum) # 55
 

@@ -57,7 +57,7 @@ l = [4,5,3,2,1]
 selectionSort(l)
 print(l) # [1, 2, 3, 4, 5]
 
-"""2. Insertion Sort"""
+"""2. Insertion Sort: O(n^2)"""
 def insertionSort(l):
     n = len(l)
     if n<1:

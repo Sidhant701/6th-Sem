@@ -8,7 +8,7 @@ int main()
     View view(FloatRect(0, 0, 1920, 1080));
     window.setView(view);
 
-    bool paused=true,gameOver = true;
+    bool paused = true, gameOver = true;
 
     Vector2u screenSize = window.getSize();
     // For background
@@ -46,35 +46,45 @@ int main()
 
     Font font;
     font.loadFromFile("fonts/KOMIKAP_.ttf");
-    
-    Text scoreText, pauseText, messageText;
+
+    Text scoreText, pauseText, messageText, gameOverText;
     scoreText.setFont(font);
     pauseText.setFont(font);
     messageText.setFont(font);
+    gameOverText.setFont(font);
 
     scoreText.setColor(Color::Red);
     pauseText.setColor(Color::White);
     messageText.setColor(Color::White);
+    gameOverText.setColor(Color::White);
 
     scoreText.setCharacterSize(100);
     pauseText.setCharacterSize(75);
     messageText.setCharacterSize(75);
+    gameOverText.setCharacterSize(75);
 
     scoreText.setString("Score : 0");
     pauseText.setString("Press \'P\' to Puase/Unpause");
     messageText.setString("Press Enter to start");
+    gameOverText.setString("");
 
-    scoreText.setPosition(20,20);
-    FloatRect rect =  pauseText.getLocalBounds();
-    pauseText.setOrigin(rect.width/2.0,rect.height/2.0);
-    pauseText.setPosition(view.getSize().x/2,view.getSize().y/2);
+    scoreText.setPosition(20, 20);
+    FloatRect rect = pauseText.getLocalBounds();
+    pauseText.setOrigin(rect.width / 2.0, rect.height / 2.0);
+    pauseText.setPosition(view.getSize().x / 2, view.getSize().y / 2);
 
-    messageText.setOrigin(messageText.getLocalBounds().width/2.0,messageText.getLocalBounds().height/2.0);
-    messageText.setPosition(view.getSize().x/2,view.getSize().y/2);
+    messageText.setOrigin(messageText.getLocalBounds().width / 2.0, messageText.getLocalBounds().height / 2.0);
+    messageText.setPosition(view.getSize().x / 2, view.getSize().y / 2);
 
+    const float maxWidthTimeBar = 400.0f;
+    const float maxHeightTimeBar = 75.0f;
 
+    RectangleShape timeBar(Vector2f(maxWidthTimeBar, maxHeightTimeBar));
+    timeBar.setFillColor(Color::Red);
+    timeBar.setPosition((view.getSize().x - maxWidthTimeBar) / 2, view.getSize().y - 100);
 
-
+    float timeRemaining = 6.0f;
+    const float widthPerTime = maxWidthTimeBar / timeRemaining;
     Clock clock;
     while (window.isOpen())
     {
@@ -84,8 +94,9 @@ int main()
         {
             if (event.type == Event::Closed)
                 window.close();
-            if(event.type == Event::KeyPressed && event.key.code == Keyboard::P && !gameOver){
-                paused=!paused;
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::P && !gameOver)
+            {
+                paused = !paused;
             }
         }
 
@@ -93,8 +104,9 @@ int main()
             window.close();
 
         // Start game
-        if (Keyboard::isKeyPressed(Keyboard::Enter))
+        if (Keyboard::isKeyPressed(Keyboard::Enter) && gameOver)
         {
+            timeRemaining = 6.0f;
             paused = false;
             gameOver = false;
         }
@@ -102,15 +114,25 @@ int main()
         if (!paused)
         {
             // Game area
-
+            timeRemaining -= dt.asSeconds();
+            timeBar.setSize(Vector2f(widthPerTime * timeRemaining, maxHeightTimeBar));
+            if (timeRemaining <= 0)
+            {
+                gameOver = true;
+                paused = true;
+                gameOverText.setString("Out of Time");
+                FloatRect rect = gameOverText.getLocalBounds();
+                gameOverText.setOrigin(rect.width / 2.0, rect.height / 2.0);
+                gameOverText.setPosition(view.getSize().x / 2, view.getSize().y / 2 - 100);
+            }
             // For bee movement
             if (!beeActive)
             {
                 // when bee is out of screen
-                srand((int)time(0)*10);
+                srand((int)time(0) * 10);
                 beeSpeed = (rand() % 200) + 200;
 
-                srand((int)time(0)*20);
+                srand((int)time(0) * 20);
                 float height = (rand() % 500) + 500;
                 spriteBee.setPosition(2000, height);
                 beeActive = true;
@@ -128,14 +150,14 @@ int main()
             if (!cloud1Active)
             {
                 // when cloud1 is out of screen
-                srand((int)time(0)*10);
+                srand((int)time(0) * 10);
                 cloud1Speed = (rand() % 200) + 200;
-                srand((int)time(0)*10);
+                srand((int)time(0) * 10);
                 float height = (rand() % 150);
                 spriteCloud1.setPosition(-100, height);
-                srand((int)time(0)*10);
-                float scale = ((rand()%60)+40)/100.0;
-                spriteCloud1.setScale(scale,scale);
+                srand((int)time(0) * 10);
+                float scale = ((rand() % 60) + 40) / 100.0;
+                spriteCloud1.setScale(scale, scale);
                 cloud1Active = true;
             }
             else
@@ -151,11 +173,11 @@ int main()
             if (!cloud2Active)
             {
                 // when cloud1 is out of screen
-                srand((int)time(0)*20);
+                srand((int)time(0) * 20);
                 cloud2Speed = (rand() % 200) + 200;
 
-                srand((int)time(0)*20);
-                float height = (rand() % 300)-150;
+                srand((int)time(0) * 20);
+                float height = (rand() % 300) - 150;
                 spriteCloud2.setPosition(-100, height);
                 cloud2Active = true;
             }
@@ -172,11 +194,11 @@ int main()
             if (!cloud3Active)
             {
                 // when cloud1 is out of screen
-                srand((int)time(0)*20);
+                srand((int)time(0) * 20);
                 cloud3Speed = (rand() % 200) + 200;
 
-                srand((int)time(0)*20);
-                float height = (rand() % 450)-300;
+                srand((int)time(0) * 20);
+                float height = (rand() % 450) - 300;
                 spriteCloud3.setPosition(-100, height);
                 cloud3Active = true;
             }
@@ -200,10 +222,14 @@ int main()
         window.draw(spriteBee);
 
         window.draw(scoreText);
-        if(gameOver)
+        if (gameOver)
+        {
             window.draw(messageText);
-        if(paused && !gameOver)
+            window.draw(gameOverText);
+        }
+        if (paused && !gameOver)
             window.draw(pauseText);
+        window.draw(timeBar);
         window.display();
     }
 }

@@ -9,9 +9,7 @@ int main(){
     View view(FloatRect(0,0,resX,resY));
     window.setView(view);
 
-    bool paused = true;
-    bool start = false;
-    bool gameOver = false;
+    bool paused = true, gameOver = true;
 
     Vector2u screenSize = window.getSize();
     
@@ -61,28 +59,47 @@ int main(){
     Font font;
     font.loadFromFile("fonts/KOMIKAP_.ttf");
 
-    Text scoreText, pauseText, messageText;
+    Text scoreText, pauseText, messageText, gameOverText;
     scoreText.setFont(font);
     pauseText.setFont(font);
     messageText.setFont(font);
+    gameOverText.setFont(font);
 
     scoreText.setColor(Color::Red);
     pauseText.setColor(Color::White);
     messageText.setColor(Color::White);
+    gameOverText.setColor(Color::White);
 
     scoreText.setCharacterSize(100);
     scoreText.setCharacterSize(75);
     scoreText.setCharacterSize(75);
+    gameOverText.setCharacterSize(75);
     
     scoreText.setString("Score: 0");
     pauseText.setString("Press \'P\' to Pause/Unpause");
     messageText.setString("Press \'Enter\' to Start");
+    gameOverText.setString("");
 
     scoreText.setPosition(20,20);
     FloatRect rect = pauseText.getLocalBounds();
     pauseText.setOrigin(rect.width/2.0,rect.height/2.0);
     pauseText.setPosition(view.getSize().x/2, view.getSize().y/2);
     pauseText.setScale(2,2);
+    
+    messageText.setOrigin(messageText.getLocalBounds().width / 2.0, messageText.getLocalBounds().height / 2.0);
+    messageText.setPosition(view.getSize().x / 2, view.getSize().y / 2);
+    messageText.setScale(2,2);
+    
+    // TIMEBAR
+    const float maxWidthTimeBar = 400.0f;
+    const float maxHeightTimeBar = 75.0f;
+
+    RectangleShape timeBar(Vector2f(maxWidthTimeBar, maxHeightTimeBar));
+    timeBar.setFillColor(Color::Red);
+    timeBar.setPosition((view.getSize().x - maxWidthTimeBar) / 2, view.getSize().y - 100);
+
+    float timeRemaining = 6.0f;
+    const float widthPerTime = maxWidthTimeBar / timeRemaining;
 
 
     Clock clock;
@@ -92,8 +109,10 @@ int main(){
         Time dt = clock.restart();
         Event event;
         while(window.pollEvent(event)){
-            if(event.type == Event::Closed){
+            if (event.type == Event::Closed)
                 window.close();
+            if (event.type == Event::KeyPressed && event.key.code == Keyboard::P && !gameOver){
+                paused = !paused;
             }
         }
 
@@ -105,26 +124,40 @@ int main(){
 			window.close();
 		}
         // Enter to Start
-		if(Keyboard::isKeyPressed(Keyboard::Enter)){
-			start = true;
+		if(Keyboard::isKeyPressed(Keyboard::Enter) && gameOver){
+            timeRemaining = 6.0f;
+            paused = false;
+            gameOver = false;
 		}
         // P to Pause/Unpause
 		if(Keyboard::isKeyPressed(Keyboard::P)){
 			paused = !paused;
+            while(Keyboard::isKeyPressed(Keyboard::P)){
+                // Do nothing, wait for key release
+            }
 		}
         
         if(!paused){
             // Game Area
             
-            
-            if(Keyboard::isKeyPressed(Keyboard::B)){
-                beeActive = true;
+            // TimeBar Movement
+            timeRemaining -= dt.asSeconds();
+            timeBar.setSize(Vector2f(widthPerTime * timeRemaining, maxHeightTimeBar));
+            if (timeRemaining <= 0)
+            {
+                gameOver = true;
+                paused = true;
+                gameOverText.setString("Out of Time");
+                FloatRect rect = gameOverText.getLocalBounds();
+                gameOverText.setOrigin(rect.width / 2.0, rect.height / 2.0);
+                gameOverText.setPosition(view.getSize().x / 2, view.getSize().y / 2 - 100);
             }
+
             if(!beeActive){
-                srand((int)time(0));
+                srand((int)time(0) * 10);
                 beeSpeed = (rand()%200)+200;
 
-                srand((int)time(0));
+                srand((int)time(0)*20);
                 float height = (rand()%500)+500;
                 spriteBee.setPosition(2000, height);
                 beeActive = true;
@@ -186,9 +219,15 @@ int main(){
         window.draw(spriteBee);
 
         window.draw(scoreText);
-        // if(gameOver) window.draw(messageText);
-        if(paused) window.draw(pauseText);
-        if(!start) window.draw(messageText);
+        window.draw(scoreText);
+        if (gameOver)
+        {
+            window.draw(messageText);
+            window.draw(gameOverText);
+        }
+        if (paused && !gameOver)
+            window.draw(pauseText);
+        window.draw(timeBar);
 
         window.display();
     }
