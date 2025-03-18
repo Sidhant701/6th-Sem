@@ -1,12 +1,26 @@
 #include <SFML/Graphics.hpp>
+#include<iostream>
 using namespace sf;
 
+enum class Side {LEFT,RIGHT,NONE};
+const int NUM_BRANCHES = 6;
+Sprite spriteBranches[NUM_BRANCHES];
+Side brachPositions[NUM_BRANCHES];
+
+void updateBranchPosition(int); 
 int main()
 {
     VideoMode vm(1920, 1080);
     RenderWindow window(vm, "Timber Game!!", Style::Fullscreen);
     View view(FloatRect(0, 0, 1920, 1080));
     window.setView(view);
+
+    const int player_L = 510;
+    const int player_R = 1260;
+    const int axe_L = 660;
+    const int axe_R = 11110;
+
+    Side playerPosition = Side::LEFT;
 
     bool paused = true, gameOver = true;
 
@@ -85,6 +99,37 @@ int main()
 
     float timeRemaining = 6.0f;
     const float widthPerTime = maxWidthTimeBar / timeRemaining;
+    
+    Texture texturePlayer;
+    texturePlayer.loadFromFile("graphics/player.png");
+    Sprite spritePlayer(texturePlayer);
+    spritePlayer.setPosition(player_L,750);
+
+    Texture textureAxe;
+    textureAxe.loadFromFile("graphics/axe.png");
+    Sprite spriteAxe(textureAxe);
+    spriteAxe.setPosition(axe_L,850);
+
+    Texture textureRIP;
+    textureRIP.loadFromFile("graphics/rip.png");
+    Sprite spriteRIP(textureRIP);
+    spriteRIP.setPosition(player_L,790);
+
+    Texture textureBranch;
+    textureBranch.loadFromFile("graphics/branch.png");
+    for(int i=0;i<NUM_BRANCHES;i++){
+        spriteBranches[i].setTexture(textureBranch);
+        spriteBranches[i].setOrigin(220,40);
+    }
+    
+    updateBranchPosition(1);
+    updateBranchPosition(2);
+    updateBranchPosition(3);
+    updateBranchPosition(4);
+    updateBranchPosition(5);
+
+
+    
     Clock clock;
     while (window.isOpen())
     {
@@ -113,6 +158,7 @@ int main()
 
         if (!paused)
         {
+
             // Game area
             timeRemaining -= dt.asSeconds();
             timeBar.setSize(Vector2f(widthPerTime * timeRemaining, maxHeightTimeBar));
@@ -210,6 +256,24 @@ int main()
                 if (x > 2000)
                     cloud3Active = false;
             }
+
+            //Placement of Branches
+            for(int i=0;i<NUM_BRANCHES;i++){
+                int y_pos = i*150;
+                // std::cout<<(int)brachPositions[i]<<std::endl;
+                if(brachPositions[i]==Side::LEFT){
+                    // std::cout<<"AAA\n";
+                    spriteBranches[i].setPosition(600,y_pos);
+                    spriteBranches[i].setRotation(180);
+                }
+                if(brachPositions[i]==Side::RIGHT){
+                    spriteBranches[i].setPosition(1260,y_pos);
+                    spriteBranches[i].setRotation(0);
+                }
+                if(brachPositions[i]==Side::NONE){
+                    spriteBranches[i].setPosition(3000,y_pos);
+                }
+            }
         } // End of game play area
 
         // Draw the window
@@ -230,6 +294,33 @@ int main()
         if (paused && !gameOver)
             window.draw(pauseText);
         window.draw(timeBar);
+        window.draw(spritePlayer);
+        window.draw(spriteAxe);
+
+        for(int i=0;i<NUM_BRANCHES;i++){
+            window.draw(spriteBranches[i]);
+        }
+        // window.draw(spriteRIP);
         window.display();
+    }
+}
+
+void updateBranchPosition(int seed){
+    for(int i=NUM_BRANCHES-1;i>=1;i--){
+        brachPositions[i]=brachPositions[i-1];
+    }
+    srand((int)(time(0))*seed);
+    int pos = rand()%4;
+    switch (pos)
+    {
+    case 0:
+        brachPositions[0] = Side::LEFT;
+        break;
+    case 1:
+        brachPositions[0] = Side::RIGHT;
+        break;
+    default:
+        brachPositions[0] = Side::NONE;
+        break;
     }
 }

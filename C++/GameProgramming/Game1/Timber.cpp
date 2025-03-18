@@ -1,6 +1,13 @@
 #include<SFML/Graphics.hpp>
 using namespace sf;
 
+enum class Side {LEFT,RIGHT,NONE};
+const int NUM_BRANCHES = 6;
+Sprite spriteBranches[NUM_BRANCHES];
+Side brachPositions[NUM_BRANCHES];
+
+void updateBranchPosition(int); 
+
 int main(){
     // int resX = 1366, resY = 768;
     int resX = 1920 , resY = 1080;
@@ -8,6 +15,17 @@ int main(){
     RenderWindow window(vm, "Timber Game!!", Style::Fullscreen);
     View view(FloatRect(0,0,resX,resY));
     window.setView(view);
+
+    
+    const int player_L = 510;
+    const int player_R = 1260;
+    Side playerPosition = Side::LEFT;
+
+    const int axe_L = 660;
+    const int axe_R = 11110;
+
+    // const int RIP_l=660;
+    // const int RIP_r=1110;
 
     bool paused = true, gameOver = true;
 
@@ -101,6 +119,35 @@ int main(){
     float timeRemaining = 6.0f;
     const float widthPerTime = maxWidthTimeBar / timeRemaining;
 
+    // Player
+    Texture texturePlayer;
+    texturePlayer.loadFromFile("graphics/player.png");
+    Sprite spritePlayer(texturePlayer);
+    spritePlayer.setPosition(player_L,750);
+    // Axe
+    Texture textureAxe;
+    textureAxe.loadFromFile("graphics/axe.png");
+    Sprite spriteAxe(textureAxe);
+    spriteAxe.setPosition(axe_L,850);
+    // RIP
+    Texture textureRIP;
+    textureRIP.loadFromFile("graphics/rip.png");
+    Sprite spriteRIP(textureRIP);
+    spriteRIP.setPosition(player_L,790);
+    // Branch
+    Texture textureBranch;
+    textureBranch.loadFromFile("graphics/branch.png");
+    for(int i=0;i<NUM_BRANCHES;i++){
+        spriteBranches[i].setTexture(textureBranch);
+        spriteBranches[i].setOrigin(220,40);
+    }
+    
+    updateBranchPosition(1);
+    updateBranchPosition(2);
+    updateBranchPosition(3);
+    updateBranchPosition(4);
+    updateBranchPosition(5);
+
 
     Clock clock;
 
@@ -111,6 +158,7 @@ int main(){
         while(window.pollEvent(event)){
             if (event.type == Event::Closed)
                 window.close();
+            // P to Pause/Unpause
             if (event.type == Event::KeyPressed && event.key.code == Keyboard::P && !gameOver){
                 paused = !paused;
             }
@@ -129,13 +177,6 @@ int main(){
             paused = false;
             gameOver = false;
 		}
-        // P to Pause/Unpause
-		if(Keyboard::isKeyPressed(Keyboard::P)){
-			paused = !paused;
-            while(Keyboard::isKeyPressed(Keyboard::P)){
-                // Do nothing, wait for key release
-            }
-		}
         
         if(!paused){
             // Game Area
@@ -153,6 +194,7 @@ int main(){
                 gameOverText.setPosition(view.getSize().x / 2, view.getSize().y / 2 - 100);
             }
 
+            // Bee Animations
             if(!beeActive){
                 srand((int)time(0) * 10);
                 beeSpeed = (rand()%200)+200;
@@ -208,8 +250,27 @@ int main(){
                 spriteCloud3.setPosition(x3, spriteCloud3.getPosition().y) ;
                 if(x3>2000) cloud3Active = false;
             }
-        }
         
+            //Placement of Branches
+            for(int i=0;i<NUM_BRANCHES;i++){
+                int y_pos = i*150;
+                // std::cout<<(int)brachPositions[i]<<std::endl;
+                if(brachPositions[i]==Side::LEFT){
+                    // std::cout<<"AAA\n";
+                    spriteBranches[i].setPosition(600,y_pos);
+                    spriteBranches[i].setRotation(180);
+                }
+                if(brachPositions[i]==Side::RIGHT){
+                    spriteBranches[i].setPosition(1260,y_pos);
+                    spriteBranches[i].setRotation(0);
+                }
+                if(brachPositions[i]==Side::NONE){
+                    spriteBranches[i].setPosition(3000,y_pos);
+                }
+            }
+        } // End of game play area
+
+        // Drawing Window
         window.clear();
         window.draw(spriteBackground);
         window.draw(spriteCloud1);
@@ -228,8 +289,36 @@ int main(){
         if (paused && !gameOver)
             window.draw(pauseText);
         window.draw(timeBar);
+        window.draw(spritePlayer);
+        window.draw(spriteAxe);
+
+        for(int i=0;i<NUM_BRANCHES;i++){
+            window.draw(spriteBranches[i]);
+        }
+
+        // window.draw(spriteRIP);
 
         window.display();
     }
     return 0;
+}
+
+void updateBranchPosition(int seed){
+    for(int i=NUM_BRANCHES-1;i>=1;i--){
+        brachPositions[i]=brachPositions[i-1];
+    }
+    srand((int)(time(0))*seed);
+    int pos = rand()%4;
+    switch (pos)
+    {
+    case 0:
+        brachPositions[0] = Side::LEFT;
+        break;
+    case 1:
+        brachPositions[0] = Side::RIGHT;
+        break;
+    default:
+        brachPositions[0] = Side::NONE;
+        break;
+    }
 }
