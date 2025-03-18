@@ -7,6 +7,11 @@ Tasks:
     (d) Compare the time complexity of both functions using Big O notation.
     (e) Explain why recursion is less efficient in this case compared to iteration.
 '''
+
+
+print('''Name: Sidhanta Barik, RegNo: 2241002049
+-------------------------------------------------------''')
+
 "(a)"
 def recursive_sum(n):
     "(b)"
@@ -15,6 +20,10 @@ def recursive_sum(n):
     return n + recursive_sum(n-1) # Recursive Step
 sum = recursive_sum(10)
 print(sum) # 55
+
+"(b)"
+# Base Case: When n is 1, return 0
+# Recursive Step: Return n + recursive_sum(n-1)
 
 "(c)"
 def iterative_sum(n):
