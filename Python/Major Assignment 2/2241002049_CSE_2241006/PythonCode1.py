@@ -1,25 +1,14 @@
-'''
-Write a recursive function to compute the sum of the first n natural numbers. Then, analyze its time complexity using Big O notation.
-Tasks:
-    (a) Implement a recursive function recursive sum(n) that computes the sum of the first n natural numbers using recursion.
-    (b) Determine the base case and recursive step.
-    (c) Write a function iterative sum(n) that computes the sum using a loop.
-    (d) Compare the time complexity of both functions using Big O notation.
-    (e) Explain why recursion is less efficient in this case compared to iteration.
-'''
-
-
 print('''Name: Sidhanta Barik, RegNo: 2241002049
 -------------------------------------------------------''')
 
 "(a)"
 def recursive_sum(n):
-    "(b)"
     if n == 1:
         return 1 # Base Case
     return n + recursive_sum(n-1) # Recursive Step
-sum = recursive_sum(10)
-print(sum) # 55
+n = 10
+sum = recursive_sum(n)
+print(f"Sum of first {n} natural nos. using Recursion = {sum}") # 55
 
 "(b)"
 # Base Case: When n is 1, return 0
@@ -31,8 +20,9 @@ def iterative_sum(n):
     for i in range(1, n+1):
         sum += i
     return sum
-sum = iterative_sum(10)
-print(sum) # 55
+n = 10
+sum = iterative_sum(n)
+print(f"Sum of first {n} natural nos. using Loop = {sum}") # 55
 
 "(d)"
 # Time complexity of recursive_sum(n) is O(n) because it performs n recursive calls.
