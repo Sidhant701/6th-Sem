@@ -135,36 +135,3 @@ player_names = [input(f"Enter name for Player {i+1}: ") for i in range(num_playe
 
 game = BlackjackGame(player_names)
 game.start_game()
-
-# Sidhanta Barik
-# 2241002049
-# -------------------------------------------------------
-# Enter the number of players: 4
-# Enter name for Player 1: Sid
-# Enter name for Player 2: Bob
-# Enter name for Player 3: Cat
-# Enter name for Player 4: John
-
-# Sid's Hand: 9 of Clubs, 7 of Hearts (Total: 16)
-# Sid, do you want to hit or stand? (h/s): h
-# Sid draws: 6 of Spades
-# Sid's Hand: 9 of Clubs, 7 of Hearts, 6 of Spades (Total: 22)
-# Sid busted!
-
-# Bob's Hand: 6 of Diamonds, Ace of Spades (Total: 17)
-# Bob, do you want to hit or stand? (h/s): s
-
-# Cat's Hand: Queen of Spades, Ace of Diamonds (Total: 21)
-# Cat, do you want to hit or stand? (h/s): s
-
-# John's Hand: 4 of Hearts, King of Clubs (Total: 14)
-# John, do you want to hit or stand? (h/s): s
-
-# Dealer's Hand: 10 of Spades, Jack of Diamonds (Total: 20)
-# Dealer's Hand: 10 of Spades, Jack of Diamonds (Total: 20)
-
-# Final Results:
-# Sid loses (busted).
-# Bob loses.
-# Cat wins!
-# John loses.
