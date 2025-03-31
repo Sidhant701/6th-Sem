@@ -228,8 +228,6 @@ int main(){
         {
             spriteAxe.setPosition(3000, spriteAxe.getPosition().y);
         }
-    }
-
 
         // * pollEvent: Discrete Event
         // * isKeyPressed: Continuous Event
@@ -365,7 +363,7 @@ int main(){
                     logActive = false;
                 }
             }// End of game play area
-
+        }
         // Drawing Window
         window.clear();
         window.draw(spriteBackground);
