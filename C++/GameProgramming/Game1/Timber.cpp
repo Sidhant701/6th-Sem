@@ -1,4 +1,6 @@
 #include<SFML/Graphics.hpp>
+#include<SFML/Audio.hpp>
+#include <iostream>
 using namespace sf;
 
 enum class Side {LEFT,RIGHT,NONE};
@@ -21,7 +23,7 @@ int main(){
     const int player_R = 1260;
     Side playerPosition = Side::LEFT;
 
-    const int axe_L = 660;
+    const int axe_L = 640;
     const int axe_R = 11110;
 
     // const int RIP_l=660;
@@ -119,6 +121,7 @@ int main(){
     float timeRemaining = 6.0f;
     const float widthPerTime = maxWidthTimeBar / timeRemaining;
 
+
     // Player
     Texture texturePlayer;
     texturePlayer.loadFromFile("graphics/player.png");
@@ -140,13 +143,38 @@ int main(){
     for(int i=0;i<NUM_BRANCHES;i++){
         spriteBranches[i].setTexture(textureBranch);
         spriteBranches[i].setOrigin(220,40);
+        spriteBranches[i].setPosition(2000,2000); //Remove if required
     }
-    
-    updateBranchPosition(1);
-    updateBranchPosition(2);
-    updateBranchPosition(3);
-    updateBranchPosition(4);
-    updateBranchPosition(5);
+    for (int i = 0; i < NUM_BRANCHES-1; i++)
+    {
+        updateBranchPosition(i);
+    }
+
+    // Log
+    Texture textureLog;
+    textureLog.loadFromFile("graphics/log.png");
+    Sprite spriteLog(textureLog);
+    spriteLog.setPosition(3000, 3000);
+
+    bool logActive = false;
+    float logXSpeed = 5000;
+    float logYSpeed = 1500;
+
+    bool actionInput = false;
+    int score = 0;
+
+    // Sounds
+    SoundBuffer chopBuffer;
+    chopBuffer.loadFromFile("audio/chop.wav");
+    Sound chop(chopBuffer);
+
+    SoundBuffer deathBuffer;
+    deathBuffer.loadFromFile("audio/death.wav");
+    Sound death(deathBuffer);
+
+    SoundBuffer ootBuffer;
+    ootBuffer.loadFromFile("audio/out_of_time.wav");
+    Sound oot(ootBuffer);
 
 
     Clock clock;
@@ -164,9 +192,48 @@ int main(){
             }
         }
 
+        // Left Input Actions
+        if (event.type == Event::KeyPressed && event.key.code == Keyboard::Left && !paused && !logActive)
+        {
+            playerPosition = Side::LEFT;
+            score++;
+            timeRemaining += (2.0f / score) + 0.15f;
+            if (timeRemaining > 6.0f)
+                timeRemaining = 6.0f;
+            spritePlayer.setPosition(player_L, spritePlayer.getPosition().y);
+            spriteAxe.setPosition(axe_L, spriteAxe.getPosition().y);
+            spriteLog.setPosition(810, 780);
+            logActive = true;
+            logXSpeed = -6000;
+            updateBranchPosition(score);
+            chop.play();
+        }
+        // Right Input Actions
+        if (event.type == Event::KeyPressed && event.key.code == Keyboard::Right && !paused && !logActive)
+        {
+            playerPosition = Side::RIGHT;
+            score++;
+            timeRemaining += (2.0f / score) + 0.15f;
+            if (timeRemaining > 6.0f)
+                timeRemaining = 6.0f;
+            spritePlayer.setPosition(player_R, spritePlayer.getPosition().y);
+            spriteAxe.setPosition(axe_R, spriteAxe.getPosition().y);
+            spriteLog.setPosition(810, 780);
+            logActive = true;
+            logXSpeed = 6000;
+            updateBranchPosition(score);
+            chop.play();
+        }
+        if (event.type == Event::KeyReleased && (event.key.code == Keyboard::Left || event.key.code == Keyboard::Right) && !paused)
+        {
+            spriteAxe.setPosition(3000, spriteAxe.getPosition().y);
+        }
+    }
+
+
         // * pollEvent: Discrete Event
         // * isKeyPressed: Continuous Event
-        
+
         // Esc to Quit
 		if(Keyboard::isKeyPressed(Keyboard::Escape)){
 			window.close();
@@ -174,13 +241,17 @@ int main(){
         // Enter to Start
 		if(Keyboard::isKeyPressed(Keyboard::Enter) && gameOver){
             timeRemaining = 6.0f;
+            score = 0;
             paused = false;
             gameOver = false;
+            spriteRIP.setPosition(3000, spriteRIP.getPosition().y);
+            brachPositions[4] = Side::NONE;
+            brachPositions[5] = Side::NONE;
 		}
-        
+
         if(!paused){
             // Game Area
-            
+
             // TimeBar Movement
             timeRemaining -= dt.asSeconds();
             timeBar.setSize(Vector2f(widthPerTime * timeRemaining, maxHeightTimeBar));
@@ -192,6 +263,7 @@ int main(){
                 FloatRect rect = gameOverText.getLocalBounds();
                 gameOverText.setOrigin(rect.width / 2.0, rect.height / 2.0);
                 gameOverText.setPosition(view.getSize().x / 2, view.getSize().y / 2 - 100);
+                oot.play();
             }
 
             // Bee Animations
@@ -257,18 +329,42 @@ int main(){
                 // std::cout<<(int)brachPositions[i]<<std::endl;
                 if(brachPositions[i]==Side::LEFT){
                     // std::cout<<"AAA\n";
-                    spriteBranches[i].setPosition(600,y_pos);
+                    spriteBranches[i].setPosition(650,y_pos);
                     spriteBranches[i].setRotation(180);
                 }
                 if(brachPositions[i]==Side::RIGHT){
-                    spriteBranches[i].setPosition(1260,y_pos);
+                    spriteBranches[i].setPosition(1350,y_pos);
                     spriteBranches[i].setRotation(0);
                 }
                 if(brachPositions[i]==Side::NONE){
                     spriteBranches[i].setPosition(3000,y_pos);
                 }
             }
-        } // End of game play area
+
+            // Check for player position
+            if (playerPosition == brachPositions[5])
+            {
+                gameOver = true;
+                paused = true;
+                if (playerPosition == Side::LEFT)
+                    spriteRIP.setPosition(player_L, spriteRIP.getPosition().y);
+                if (playerPosition == Side::RIGHT)
+                    spriteRIP.setPosition(player_R, spriteRIP.getPosition().y);
+                gameOverText.setString("Squished...");
+                FloatRect rect = gameOverText.getLocalBounds();
+                gameOverText.setOrigin(rect.width / 2.0, rect.height / 2.0);
+                gameOverText.setPosition(view.getSize().x / 2, view.getSize().y / 2 - 100);
+                death.play();
+            }
+            scoreText.setString("Score: " + std::to_string(score));
+            if (logActive){
+                float newX = spriteLog.getPosition().x + logXSpeed * dt.asSeconds();
+                float newY = spriteLog.getPosition().y - logYSpeed * dt.asSeconds();
+                spriteLog.setPosition(newX, newY);
+                if ((newX < -300 || newX > 2200) || newY < -100){
+                    logActive = false;
+                }
+            }// End of game play area
 
         // Drawing Window
         window.clear();
@@ -278,6 +374,18 @@ int main(){
         window.draw(spriteCloud3);
         window.draw(spriteTree);
         window.draw(spriteBee);
+
+        if (paused && !gameOver)
+            window.draw(pauseText);
+        window.draw(timeBar);
+        window.draw(spritePlayer);
+        window.draw(spriteAxe);
+
+        for(int i=0;i<NUM_BRANCHES;i++){
+            window.draw(spriteBranches[i]);
+        }
+
+        // window.draw(spriteRIP);
 
         window.draw(scoreText);
         window.draw(scoreText);
@@ -292,11 +400,8 @@ int main(){
         window.draw(spritePlayer);
         window.draw(spriteAxe);
 
-        for(int i=0;i<NUM_BRANCHES;i++){
-            window.draw(spriteBranches[i]);
-        }
-
-        // window.draw(spriteRIP);
+        window.draw(spriteRIP);
+        window.draw(spriteLog);
 
         window.display();
     }
