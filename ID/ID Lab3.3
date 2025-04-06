@@ -1,0 +1,331 @@
+sqlplus id2241002049/id2241002049@//172.30.16.99/ora11g
+
+SQL*Plus: Release 12.2.0.1.0 Production on Sat Apr 5 14:21:29 2025
+
+Copyright (c) 1982, 2016, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, Oracle Label Security, OLAP, Data Mining,
+Oracle Database Vault and Real Application Testing options
+
+SQL> select power(2,3) from dual;
+
+POWER(2,3)
+----------
+	 8
+
+SQL> select abs(-15) from dual'
+  2  ;
+ERROR:
+ORA-01756: quoted string not properly terminated
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select abs(-15) from dual'
+  2  
+SQL> select abs(-15) from dual;
+
+  ABS(-15)
+----------
+	15
+
+SQL> select round(15.19,1) from dual;
+
+ROUND(15.19,1)
+--------------
+	  15.2
+
+SQL> select sqrt(1024) from dual;
+
+SQRT(1024)
+----------
+	32
+
+SQL> select exp(2) from dual;
+
+    EXP(2)
+----------
+ 7.3890561
+
+SQL> select greatest(3,5,7) from dual;
+
+GREATEST(3,5,7)
+---------------
+	      7
+
+SQL> select least(3,5,7) from dual;
+
+LEAST(3,5,7)
+------------
+	   3
+
+SQL> select mod(15,7) from dual;
+
+ MOD(15,7)
+----------
+	 1
+
+SQL> select trunc(24379.42,-2) from dual;
+
+TRUNC(24379.42,-2)
+------------------
+	     24300
+
+SQL> DEFINE _EDITOR=gedit;
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select trunc(24379.42,-2) from dual
+SQL> /
+
+TRUNC(24379.42,-2)
+------------------
+	     24300
+
+SQL> select lower('iter') from dual;
+
+LOWE
+----
+iter
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lower('iTer') from dual
+SQL> /
+
+LOWE
+----
+iter
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select upper('iTer') from dual
+SQL> /
+
+UPPE
+----
+ITER
+
+SQL> select initcap('My name is Sid') from dual;
+
+INITCAP('MYNAM
+--------------
+My Name Is Sid
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('secure',3,4) from dual
+SQL> /
+
+SUBS
+----
+cure
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select length('iter') from dual
+SQL> /
+
+LENGTH('ITER')
+--------------
+	     4
+
+SQL> select translate('iscount523','123','799') from dual;
+
+TRANSLATE(
+----------
+iscount599
+
+SQL> select extract(january from sysdate) from dual;
+select extract(january from sysdate) from dual
+                       *
+ERROR at line 1:
+ORA-00907: missing right parenthesis
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select extract(month from sysdate) from dual
+SQL> /
+
+EXTRACT(MONTHFROMSYSDATE)
+-------------------------
+			4
+
+SQL> select last_day(sysdate) from dual;
+
+LAST_DAY(
+---------
+30-APR-25
+
+SQL> select months_between('04-APR-2025', '30-APR-25
+  2  ') from dual;
+
+MONTHS_BETWEEN('04-APR-2025','30-APR-25')
+-----------------------------------------
+			       -.83870968
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select months_between('07-Jan-2004', '05-APR-2025') from dual
+SQL> /
+
+MONTHS_BETWEEN('07-JAN-2004','05-APR-2025')
+-------------------------------------------
+				 -254.93548
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select months_between('05-APR-2025', '27-OCT-2004') from dual
+SQL> /
+
+MONTHS_BETWEEN('05-APR-2025','27-OCT-2004')
+-------------------------------------------
+				 245.290323
+
+SQL> select to_char(sysdate, 'dd-mm-yy') from dual;
+
+TO_CHAR(
+--------
+05-04-25
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate, 'dd-mm-yyyy') from dual
+SQL> /
+
+TO_CHAR(SY
+----------
+05-04-2025
+
+SQL> de
+SP2-0042: unknown command "de" - rest of line ignored.
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate, 'dd-mmm-yyyy') from dual
+SQL> /
+select to_char(sysdate, 'dd-mmm-yyyy') from dual
+                        *
+ERROR at line 1:
+ORA-01821: date format not recognized
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select to_char(sysdate, 'dd-mm-yyyy') from dual
+SQL> /
+
+TO_CHAR(SY
+----------
+05-04-2025
+
+SQL> select to_date('06/07/02','dd/mm/yy') from dual;
+
+TO_DATE('
+---------
+06-JUL-02
+
+SQL> 	*************************************************
+SP2-0734: unknown command beginning "**********..." - rest of line ignored.
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> 
+SQL> select initcap('sidhanta barik') from dual;
+
+INITCAP('SIDHA
+--------------
+Sidhanta Barik
+
+SQL> select select substr('Sidhanta Barik',2,5) from dual;
+select select substr('Sidhanta Barik',2,5) from dual
+       *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select substr('Sidhanta Barik',2,5) from dual
+SQL> /
+
+SUBST
+-----
+idhan
+
+SQL> select length('Siksha O Anusandhan') from dual;
+
+LENGTH('SIKSHAOANUSANDHAN')
+---------------------------
+			 19
+
+SQL> select * from tab;
+
+TNAME			       TABTYPE	CLUSTERID
+------------------------------ ------- ----------
+BIN$foKoUTKPQrSu3reXwOZQ5A==$0 TABLE
+BIN$mKnR1sRoQtqr080eGF0K1A==$0 TABLE
+BONUS			       TABLE
+COURSEF2049		       TABLE
+DEPARTMENTF2049 	       TABLE
+DEPT			       TABLE
+EMP			       TABLE
+INSTRUCTORF2049 	       TABLE
+PREREQF2049		       TABLE
+SALGRADE		       TABLE
+TEACHESF2049		       TABLE
+
+11 rows selected.
+
+SQL> select initcap(*) from instructorf2049;
+select initcap(*) from instructorf2049
+               *
+ERROR at line 1:
+ORA-00936: missing expression
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select initcap(name) from instructorf2049
+SQL> /
+
+INITCAP(NAME)
+------------------------------
+El Said
+Gold
+Katz
+Califieri
+Mozart
+Einstein
+Singh
+Crick
+Brandt
+Kim
+Srinivasan
+
+INITCAP(NAME)
+------------------------------
+Wu
+
+12 rows selected.
+
+SQL>   
+
+
