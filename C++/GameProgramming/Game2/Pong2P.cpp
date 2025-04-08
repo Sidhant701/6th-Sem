@@ -36,9 +36,16 @@ int main(){
     // Bat Object 
     int bat_height = 20, bat_width = 400;
     float bat_speed = 600;
+    // Bat1
     Bat bat(bat_width, bat_height, screenSize);
     bat.setSpeed(bat_speed);
     bat.getShape().setFillColor(Color::White);
+    // Bat2
+    float posX = screenSize.x - bat_width/2;
+    float posY = screenSize.y - bat_height - 1040;
+    Bat bat2(bat_width, bat_height, posX, posY, screenSize);
+    bat2.setSpeed(bat_speed);
+    bat2.getShape().setFillColor(Color::White);
 
     // Ball
     int ball_radius = 15;
@@ -50,12 +57,22 @@ int main(){
     int score = 0;
     Font font;
     font.loadFromFile("DS-DIGI.TTF");
+
+    // Score for bat 
     Text scoreText;
     scoreText.setFont(font);
     scoreText.setFillColor(Color::White);
     scoreText.setCharacterSize(75);
     scoreText.setPosition(20,20);
-    scoreText.setString("Score: 0");
+    scoreText.setString("Score1: 0");
+
+    // Score for bat2 
+    Text scoreText2;
+    scoreText2.setFont(font);
+    scoreText2.setFillColor(Color::White);
+    scoreText2.setCharacterSize(75);
+    scoreText2.setPosition(20,20+75);
+    scoreText2.setString("Score2:0");
 
     Text messageText;
     messageText.setFont(font);
@@ -88,6 +105,7 @@ int main(){
             window.close();
         }
         
+        // bat movement
         if(Keyboard::isKeyPressed(Keyboard::Left)){
             bat.moveLeft();
         }
@@ -99,6 +117,20 @@ int main(){
         }
         else{
             bat.stopRight();
+        }
+        
+        // bat2 movement
+        if(Keyboard::isKeyPressed(Keyboard::A)){
+            bat2.moveLeft();
+        }
+        else{
+            bat2.stopLeft();
+        }
+        if(Keyboard::isKeyPressed(Keyboard::D)){
+            bat2.moveRight();
+        }
+        else{
+            bat2.stopRight();
         }
 
         if(Keyboard::isKeyPressed(Keyboard::Enter) && gameOver){
@@ -113,14 +145,14 @@ int main(){
         }
         
         if(ball.getPosition().top <= 0){
-            ball.reboundTop();
-            score++;
+            // ball.reboundTop();
+            lives--;
+            // score++;
         } 
 
         if(ball.getPosition().top >= screenSize.y){
-            
             ball.reboundBottom();
-                lives--;
+            lives--;
             if(lives == 0){
                 gameOver = true;
             }
@@ -129,22 +161,30 @@ int main(){
         if(ball.getPosition().intersects(bat.getPosition())){
             ball.reboundByBat();
         }
-        scoreText.setString("Score: "+std::to_string(score));
+        if(ball.getPosition().intersects(bat2.getPosition())){
+            ball.reboundByBat();
+        }
+
+        scoreText.setString("Score1: "+std::to_string(score));
+        scoreText2.setString("Score2:"+std::to_string(score));
 
         
         window.clear();
         Time dt = clock.restart();
         bat.update(dt);
+        bat2.update(dt);
         
             
         ball.update(dt);
         if(!gameOver){
             window.draw(scoreText);
+            window.draw(scoreText2);
             window.draw(livesText);
             for(int i=0;i <lives;i++){
                 window.draw(liveSprite[i]);
             }
             window.draw(bat.getShape());
+            window.draw(bat2.getShape());
             window.draw(ball.getShape());
             window.display();
         }
