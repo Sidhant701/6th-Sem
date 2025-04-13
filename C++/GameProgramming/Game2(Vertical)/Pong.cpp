@@ -152,7 +152,6 @@ int main(){
             window.draw(messageText);
             window.display();
         }
-        
 
     }
 

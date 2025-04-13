@@ -326,6 +326,315 @@ Wu
 
 12 rows selected.
 
-SQL>   
+
+
+12/4/25
+
+student@iteradmin-Vostro-3268:~$ sqlplus id2241002049/id2241002049@//172.30.16.99/ora11g
+
+SQL*Plus: Release 12.2.0.1.0 Production on Sat Apr 12 16:18:05 2025
+
+Copyright (c) 1982, 2016, Oracle.  All rights reserved.
+
+
+Connected to:
+Oracle Database 11g Enterprise Edition Release 11.2.0.1.0 - 64bit Production
+With the Partitioning, Oracle Label Security, OLAP, Data Mining,
+Oracle Database Vault and Real Application Testing options
+
+SQL> select * from tab;
+
+TNAME			       TABTYPE	CLUSTERID
+------------------------------ ------- ----------
+BIN$foKoUTKPQrSu3reXwOZQ5A==$0 TABLE
+BIN$mKnR1sRoQtqr080eGF0K1A==$0 TABLE
+BONUS			       TABLE
+COURSEF2049		       TABLE
+DEPARTMENTF2049 	       TABLE
+DEPT			       TABLE
+EMP			       TABLE
+INSTRUCTORF2049 	       TABLE
+PREREQF2049		       TABLE
+SALGRADE		       TABLE
+TEACHESF2049		       TABLE
+
+11 rows selected.
+
+SQL> create table student(
+  2  sid int(6) not null,
+  3  Name varchar2(15) NOT NULL UNIQUE,   
+  4  Branch varchar2(10),
+  5  PRIMARY KEY(SID));
+sid int(6) not null,
+       *
+ERROR at line 2:
+ORA-00907: missing right parenthesis
+
+
+SQL> select len("Siksha O Anusandhan") from dual;
+select len("Siksha O Anusandhan") from dual
+       *
+ERROR at line 1:
+ORA-00904: "LEN": invalid identifier
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select len("Siksha O Anusandhan") from dual
+SQL> define _editor="gedit";
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select length("Siksha O Anusandhan") from dual
+SQL> /
+select length("Siksha O Anusandhan") from dual
+              *
+ERROR at line 1:
+ORA-00904: "Siksha O Anusandhan": invalid identifier
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select length('Siksha O Anusandhan') from dual
+SQL> /
+
+LENGTH('SIKSHAOANUSANDHAN')
+---------------------------
+			 19
+
+SQL> ^C                            
+
+SQL> 
+SQL> select substr(name, 1, 3) from dual;  
+select substr(name, 1, 3) from dual
+              *
+ERROR at line 1:
+ORA-00904: "NAME": invalid identifier
+
+
+SQL> select substr(name, 1, 3) from instructorf2049;
+
+SUB
+---
+El
+Gol
+Kat
+Cal
+Moz
+Ein
+Sin
+Cri
+Bra
+Kim
+Sri
+
+SUB
+---
+Wu
+
+12 rows selected.
+
+SQL> select * from instructorf2049;
+
+	ID NAME 			  DEPARTMENT
+---------- ------------------------------ ------------------------------
+    SALARY
+----------
+     32343 El Said			  History
+     60000
+
+     33456 Gold 			  Physics
+     87000
+
+     45565 Katz 			  Comp. Sci.
+     75000
+
+
+	ID NAME 			  DEPARTMENT
+---------- ------------------------------ ------------------------------
+    SALARY
+----------
+     58583 Califieri			  History
+     62000
+
+     15151 Mozart			  Music
+     40000
+
+     22222 Einstein			  Physics
+     95000
+
+
+	ID NAME 			  DEPARTMENT
+---------- ------------------------------ ------------------------------
+    SALARY
+----------
+     76543 Singh			  Finance
+     80000
+
+     76766 Crick			  Biology
+     72000
+
+     83821 Brandt			  Comp. Sci.
+     92000
+
+
+	ID NAME 			  DEPARTMENT
+---------- ------------------------------ ------------------------------
+    SALARY
+----------
+     98345 Kim				  Elec. Eng.
+     80000
+
+     10101 Srinivasan			  Comp. Sci.
+     65000
+
+     12121 Wu				  Finance
+     90000
+
+
+12 rows selected.
+
+SQL> set pagesize 250;
+SQL> set linesize 250;
+SQL> 
+SQL> select * from instructorf2049;
+
+	ID NAME 			  DEPARTMENT			     SALARY
+---------- ------------------------------ ------------------------------ ----------
+     32343 El Said			  History			      60000
+     33456 Gold 			  Physics			      87000
+     45565 Katz 			  Comp. Sci.			      75000
+     58583 Califieri			  History			      62000
+     15151 Mozart			  Music 			      40000
+     22222 Einstein			  Physics			      95000
+     76543 Singh			  Finance			      80000
+     76766 Crick			  Biology			      72000
+     83821 Brandt			  Comp. Sci.			      92000
+     98345 Kim				  Elec. Eng.			      80000
+     10101 Srinivasan			  Comp. Sci.			      65000
+     12121 Wu				  Finance			      90000
+
+12 rows selected.
+
+SQL> select trunc(94204.27348, 2) from dual;
+
+TRUNC(94204.27348,2)
+--------------------
+	    94204.27
+
+SQL> select sum(5, power(8,9)) from dual;
+select sum(5, power(8,9)) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select sum(5, power(8,9)) from dual
+SQL> /
+select sum(5, power(8,9)) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select sum(5, 8) from dual
+SQL> /
+select sum(5, 8) from dual
+       *
+ERROR at line 1:
+ORA-00909: invalid number of arguments
+
+
+SQL> select (5+5) from dual;
+
+     (5+5)
+----------
+	10
+
+SQL> select (5+power(8,9)) from dual; 
+
+(5+POWER(8,9))
+--------------
+     134217733
+
+SQL> select sqrt(6464312) from dual;
+
+SQRT(6464312)
+-------------
+   2542.50113
+
+SQL> select length('HELLO ITER') as lower case from dual;
+select length('HELLO ITER') as lower case from dual
+                                     *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select length('HELLO ITER') as lower_case
+SQL> /
+select length('HELLO ITER') as lower_case
+                                        *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select length('HELLO ITER') as "lower case"
+SQL> /
+select length('HELLO ITER') as "lower case"
+                                          *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lower('HELLO ITER') as "lower case"
+SQL> /
+select lower('HELLO ITER') as "lower case"
+                                         *
+ERROR at line 1:
+ORA-00923: FROM keyword not found where expected
+
+
+SQL> ed
+Wrote file afiedt.buf
+
+  1* select lower('HELLO ITER') as "lower case" from dual
+SQL> /
+
+lower case
+----------
+hello iter
+
+SQL> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
