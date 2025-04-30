@@ -2,7 +2,7 @@
 
 '''
 Q1)Create a class Mobile having: 
-    atributes: brand, battery, storage.
+    attributes: brand, battery, storage.
     methods: calling, texting, gaming with the following conditions: 
         calling is possible if battery>25%
         texting is possible if battery>15%
@@ -24,11 +24,13 @@ iii) Can I play games on Apple having battery 45% storage 32GB?
 #             return True
 #         else:
 #             return False
+
 #     def texting(self):
 #         if self.battery > 15:
 #             return True
 #         else:
 #             return False
+
 #     def gaming(self):
 #         if self.battery>40 and self.storage>='64GB':
 #             return True
@@ -38,6 +40,8 @@ iii) Can I play games on Apple having battery 45% storage 32GB?
 # m1 = Mobile("Samsung S23", 30, '64GB')
 # m2 = Mobile("Redmi Note 13", 10, '32GB')
 # m3 = Mobile("Apple", 45, '32GB')
+# # print(f"Calling {"is" if m1.calling() else "is not"} possible in {m1.brand} with {m1.battery}% battery.") #This can be used to print the result in one line.
+
 # if(m1.calling()):
 #     print(f"Calling is possible in {m1.brand} with {m1.battery}% battery.")
 # else:

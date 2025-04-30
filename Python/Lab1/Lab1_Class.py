@@ -2,7 +2,7 @@
 
 '''
 Class:  It is a type of blueprint, used to design the structure and layout of an object.
-        
+
 Object: An object is an instance of a class.
         An object is a bundle of related attributes(variables) and methods(functions).
 '''
