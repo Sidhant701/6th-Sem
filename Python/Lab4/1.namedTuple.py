@@ -17,8 +17,8 @@
 
 '''
 Named Tuple has certain advantages such as:-
-    1) Improved codereadability.
-    2) Better Maintanability.
+    1) Improved code readability.
+    2) Better Maintainability.
     3) Memory Efficiency -> Named tuples use less memory than regular classes.
 
 There are some cases where named tuple should not be used, such as:-
@@ -41,16 +41,16 @@ There are some cases where named tuple should not be used, such as:-
 # p2 = Person('Sid', 20)
 # print(p1)
 # print(p2)
-# print(p1 == p2) # False
+# print(p1 == p2) # True
 
 # p2 = Person('Sid', 21)
 # print(p1)
 # print(p2)
-# print(p1 == p2) # False (without __eq__ if age is same, because objects have diff) / True (with __eq__)
+# print(p1 == p2) # False (without __eq__ if age is same, because objects have diff memory addresses) / True (with __eq__)
 
 
 '''
-Data classes are decorator used in Python which automatically imlements __init__, __repr__ & __eq__ methods without defining them.
+Data classes are decorator used in Python which automatically implements __init__, __repr__ & __eq__ methods without defining them.
 '''
 '''2. Program with dataclass'''
 # from dataclasses import dataclass

@@ -15,5 +15,5 @@ class WellPaidDuck:
         return Decimal('1_000_000.00')
 
 wpd = WellPaidDuck()
-print(wpd)
-print(wpd.earnings())
+print(wpd) # I am a well-paid duck
+print(wpd.earnings()) # 1000000.00

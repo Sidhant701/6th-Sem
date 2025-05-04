@@ -4,10 +4,10 @@
 Recursion: It is the process of defining something in terms of itself. There are 3 Steps:-
     i) Define a function f()
     ii) Create a base case.
-    iii) use "f" to find "f".    
+    iii) use "f" to find "f".
 '''
 
-# # Factorial
+"Factorial"
 # def fact(n):
 #     if n == 0 or n==1:
 #         return 1
@@ -20,9 +20,12 @@ Recursion: It is the process of defining something in terms of itself. There are
 
 
 
-# # Fibonacci Sequence
+"Fibonacci Sequence"
 # def fibo(n):
-#     if n==0:
+#     if n<0:
+#         print("Enter a +ve number!!")
+#         return
+#     elif n==0:
 #         return 0
 #     elif n==1:
 #         return 1
@@ -34,7 +37,7 @@ Recursion: It is the process of defining something in terms of itself. There are
 # # Fibonacci number at position 7 = 13
 
 
-# # Length of String
+"Length of String"
 # def lent(s):
 #     if s=="":
 #         return 0
@@ -46,20 +49,20 @@ Recursion: It is the process of defining something in terms of itself. There are
 # # Length of string = 5
 
 
-# # String Reversal
+"String Reversal"
 # def rev(s):
 #     if s=="":
 #         return s
 #     else:
 #         return rev(s[1:]) + s[0] #Both statements work
-#         # return s[len(s)-1] + rev(s[:len(s)-1]) #Both statements work
+#         # return s[-1] + rev(s[:-1]) #Both statements work
 # s = input("Enter a String: ")
 # print(f"Reversed string = {rev(s)}")
 # # Enter a String: Sid B
 # # Reversed string = B diS
 
 
-# # GCD of 2 Nos.
+"GCD of 2 Nos."
 # def gcd(a,b):
 #     if b==0:
 #         return a
@@ -73,25 +76,27 @@ Recursion: It is the process of defining something in terms of itself. There are
 # # GCD of 18 and 12 = 6
 
 
-# # Pallindrome
-# def isPallindrome(s):
+"Palindrome"
+# def isPalindrome(s):
 #     if len(s) < 2:
 #         return True
-#     elif s[0] == s[len(s)-1]:
-#         return isPallindrome(s[1:len(s)-1])
+#     elif s[0] == s[-1]:
+#         return isPalindrome(s[1:-1])
+#     else:
+#         return False
 # s = input("Enter a String: ")
 # s = s.lower()
-# if isPallindrome(s):
-#     print(f'"{s}" is pallindrome')
+# if isPalindrome(s):
+#     print(f'"{s}" is Palindrome')
 # else:
-#     print(f'"{s}" is not pallindrome')
+#     print(f'"{s}" is not Palindrome')
 # # Enter a String: racecar
-# # "racecar" is pallindrome
+# # "racecar" is Palindrome
 # # Enter a String: racecars
-# # "racecars" is not pallindrome
+# # "racecars" is not Palindrome
 
 
-# # Sum of nos. in a list
+"Sum of nos. in a list"
 # def listSum(l, n):
 #     if n == 0:
 #         return 0

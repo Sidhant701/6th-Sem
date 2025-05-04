@@ -9,15 +9,16 @@ Serching Algorithms:-
 """Linear Search Algorithm"""
 # l = [2,3,5,1,7,6,8,9]
 # key = 7
-# def lins(l, key):   
-#     f = 0 
+# def lins(l, key):
+#     f = 0
 #     for i in range(len(l)):
 #         if key == l[i]:
 #             f = 1
-#     if f == 1:
+#             break
+#     if f: # same as f == 1 (any non-zero value is True)
 #         return (f"{key} found at index {i}")
 #     return (f"{key} not found.")
-# print(lins(l, key))
+# print(lins(l, key)) # 7 found at index 4
 
 
 """Binary Search Algorithm"""
@@ -43,7 +44,7 @@ Serching Algorithms:-
 # # 6 is found at index 5
 
 
-'''Searching Algos:-'''
+'''Sorting Algos:-'''
 """1. Selection Sort: O(n^2)"""
 def selectionSort(l):
     for i in range(len(l)):
@@ -92,8 +93,9 @@ def twoSum(ar, target):
 
 l = [1,2,3,1,5,6]
 x = 5
-twoSum(l, x)
-    
+twoSum(l, x) # Target exists: [2,3]
+
+
 """
 3. Merge Sort: It is a complex but a good sorting algorithm with complexity: O(n log2(n)) [log2 = log.base2]. 
                   It Follows the Divide and Conquer rule.
@@ -114,7 +116,7 @@ def merge(left, right):
     merged = []
     left_index = 0
     right_index = 0
-    while(left_index<len(left) and right_index<len(right)):
+    while(left_index < len(left) and right_index < len(right)):
         if left[left_index] <= right[right_index]:
             merged.append(left[left_index])
             left_index += 1
@@ -125,5 +127,4 @@ def merge(left, right):
     merged.extend(right[right_index:])
     return merged
 
-print(mergeSort([4,5,6,1,3,7,0,9]))
-
+print(mergeSort([4,5,6,1,3,7,0,9])) # [0, 1, 3, 4, 5, 6, 7, 9]

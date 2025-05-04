@@ -49,7 +49,7 @@ Attributes: They are similar to variables to describe what the object has.
 
 # char1 = BulletEcho('Bastion', 87, 'Machine Gun')
 # char2 = BulletEcho('FireFly', 76, 'Sniper')
-# char3 = BulletEcho('Levi', 71, 'Assualt Rifle')
+# char3 = BulletEcho('Levi', 71, 'Assault Rifle')
 
 # print(char1.name) # Bastion
 # print(char1.level) # 87
@@ -84,7 +84,7 @@ Inheritance: It is used to inherit the properties of an existing class along wit
 # # print(char1.health) # AttributeError: 'BulletEcho' object has no attribute 'health'
 # char2 = MoreProps('Firefly', 87, "Sniper", 100, 80)
 # print(char2.health) # 100
-# char3 = MoreProps('Levi', 71, 'Assualt Rifle', 100, 80)
+# char3 = MoreProps('Levi', 71, 'Assault Rifle', 100, 80)
 # char3.highlevel() # Levi is a normal level character.
 
 
@@ -93,7 +93,7 @@ Inheritance: It is used to inherit the properties of an existing class along wit
 '''
 Encapsulation: used to encapsulate particular attribute to restrict access to everyone
 '''
-# class BulletEcho: 
+# class BulletEcho:
 #     def __init__(self,name,level,weapon):
 #         self.name=name
 #         self.level=level
@@ -132,11 +132,11 @@ Polymorphism: poly means many and morph means forms and shapes.
 #         self.health=health
 #         self.armor=armor
 
-# char1=Bulletecho("bstion",87,"machine gun")
+# char1=Bulletecho("bastion",87,"machine gun")
 # char2=MoreProps('firefly',76,'Sniper',100,50)
 # # print(char1.health) # AttributeError: 'Bulletecho' object has no attribute 'health'
 # print(char2.health) # 100
-# char1.gametype() # bstion is playing in the arena mode
+# char1.gametype() # bastion is playing in the arena mode
 # char2.gametype() # firefly is playing in the arena mode
 '''-------------------------------xx---------------------------------'''
 
@@ -168,9 +168,9 @@ Polymorphism: poly means many and morph means forms and shapes.
 #         else:
 #             print(f'{self.name} is playing in normal mode')
 
-# char1=Bulletecho("bstion",87,"machine gun")
+# char1=Bulletecho("bastion",87,"machine gun")
 # char2=MoreProps('firefly',76,'Sniper',100,0)
-# char1.gametype() # bstion is playing in the arena mode
+# char1.gametype() # bastion is playing in the arena mode
 # char2.gametype() # firefly is playing in normal mode
 
 
@@ -259,7 +259,7 @@ Static method: A static method is a method which is bound to the class and not t
                Thus, the function is put inside the class but it cannot access the instance of the class.
                It means that the static method exists independently from the instances ,for which it is called static.
                In the static method, the function does not need a self argument (it does not receive an implicit 1st argument).
-               static method is a decorator and can be called directly using the class name 
+               static method is a decorator and can be called directly using the class name.
 '''
 # class Bulletecho: 
 #     def __init__(self,name,level,weapon):
@@ -282,7 +282,7 @@ Static method: A static method is a method which is bound to the class and not t
 #         return 'I hope you are happy with the game'
 # char1=Bulletecho("kiki",87,"machine gun")
 # print(Bulletecho.statement()) # I hope you are happy with the game
-# print(char1.statement()) # TypeError: Bulletecho.statement() takes 0 positional arguments but 1 was given
+# # print(char1.statement()) # TypeError: Bulletecho.statement() takes 0 positional arguments but 1 was given
 '''-------------------------------xx---------------------------------'''
 
 # class Bulletecho: 
@@ -299,12 +299,12 @@ Static method: A static method is a method which is bound to the class and not t
 
 
 '''
-Self variable: is a default variable that contains the memory adddress of the instance of the current class 
+Self variable: is a default variable that contains the memory address of the instance of the current class 
                so we can use 'self' to refer to all the instance variables and methods
 '''
 
 '''
-Constructor: is a special ,ethod that is used to initialize the instance variable of a class.
+Constructor: is a special, method that is used to initialize the instance variable of a class.
              In constructor, we create the instance variable and initialize with some starting value
              The 1st parameter of the constructor will be self variable that contains memory address of that instance
 '''
@@ -320,7 +320,7 @@ Instance variables: are the variables whose separate copy is created in every in
 # class Sample:
 #     def __init__(self): # constructor method
 #         self.x=10
-#     def modify(self): # instacnce method
+#     def modify(self): # instance method
 #         self.x+=1
 
 # s1=Sample()
@@ -346,10 +346,10 @@ When we modify we modify the copy of x in one instance , it will not modify the 
 
 '''
 class variables: unlike instance var, class variables are the variables whose single copy is available to all instances of the class.
-                 If we modify the copy of class var in an instance, it will modyfy all the copies in other instances as well
+                 If we modify the copy of class var in an instance, it will modify all the copies in other instances as well.
 '''
 # class Sample :
-#     x=10 # class variable 
+#     x=10 # class variable
 
 #     @classmethod
 #     def modify(cls):
@@ -384,7 +384,7 @@ Types of Methods: -
 '''
 1) Instance methods: 
     * are the methods which act upon the instance var of the class.
-    * are bound to instances and hence are called instancename.method().
+    * are bound to instances and hence are called instanceName.method().
     * since instance var are available in the instance , instance methods needs to know the mem address of the instance.
     * this is provided with self variable
 
@@ -449,11 +449,11 @@ Types of Methods: -
 #     def setName(self,name): # mutator method
 #         self.name=name
 #     def getName(self): # accessor method
-#         return self .name
+#         return self.name
 #     def setMarks(self,marks): # mutator method
 #         self.marks=marks
 #     def getMarks(self): # accessor method
-#         return self .marks
+#         return self.marks
 
 # n=int(input("Enter no of students: "))
 # i=0
@@ -483,12 +483,13 @@ Types of Methods: -
 '''
 2) Class methods:-
     * acts on the class level
-    * thay act on class var or static variables
+    * they act on class var or static variables
     * are written using @classmethod decorator above them
     * by default, the 1st parameter for class methods is cls which refers to class itself
 '''
 # class Bird:
 #     wings=2 # class var
+
 #     @classmethod
 #     def fly(cls,name):
 #         print('{} flies with {} wings'.format(name,cls.wings))
@@ -499,15 +500,17 @@ Types of Methods: -
 
 '''
 3) Static methods: We need static methods, when the processing is at the class level but we need not involve the class or the instances.
-                   used when some processes are related to class but doesnt need the class or instances to perform any work.
+                   Used when some processes are related to class but doesn't need the class or instances to perform any work.
 '''
 # class Myclass:
 #     n=0 # class var or static var
 #     def __init__(self):
 #         Myclass.n+=1
+
 #     @staticmethod
 #     def NOofObjects():
 #         print("total instances : ",Myclass.n)
+
 # obj1=Myclass() 
 # Myclass.NOofObjects() # total instances :  1
 # obj2=Myclass()
@@ -562,37 +565,37 @@ Types of Methods: -
 # # b
 
 
-class A(object):
-    def method(self):
-        print('A')
-        super().method()
-class B(object):
-    def method(self):
-        print('B')
-        super().method()
-class C(object):
-    def method(self):
-        print('C')
-        super().method()
-class X(A,B):
-    def method(self):
-        print('X')
-        super().method()
-class Y(B,C):
-    def method(self):
-        print('Y')
-        super().method()
-class P(X,Y,C):
-    def method(self):
-        print('P')
-        super().method()
-        
-varOfP = P()
-varOfP.method()
-# P
-# X
-# A
-# Y
-# B
-# C
-# #Ignore the error 
+# class A(object):
+#     def method(self):
+#         print('A')
+#         super().method()
+# class B(object):
+#     def method(self):
+#         print('B')
+#         super().method()
+# class C(object):
+#     def method(self):
+#         print('C')
+#         super().method()
+# class X(A,B):
+#     def method(self):
+#         print('X')
+#         super().method()
+# class Y(B,C):
+#     def method(self):
+#         print('Y')
+#         super().method()
+# class P(X,Y,C):
+#     def method(self):
+#         print('P')
+#         super().method()
+
+# varOfP = P()
+# varOfP.method()
+# # P
+# # X
+# # A
+# # Y
+# # B
+# # C
+# # #Ignore the error

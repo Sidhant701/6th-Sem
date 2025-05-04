@@ -9,12 +9,15 @@ class Complex:
         self.real = real
         self.imag = imag
         
-    def __add__(self, right):
+    def __add__(self, right): # +
         return Complex(self.real + right.real, self.imag + right.imag)
     
-    def __iadd__(self, right): #OPTIONAL
+    def __iadd__(self, right): # += (OPTIONAL)
         self.real += right.real
         self.imag += right.imag
+        return self
+    
+        # return Complex(self.real += right.real, self.imag += right.imag) # This won't work
         
     def __sub__(self, right):
         return Complex(self.real - right.real, self.imag - right.imag)
@@ -22,6 +25,7 @@ class Complex:
     def __isub__(self, right):
         self.real -= right.real
         self.imag -= right.imag
+        return self
         
     def __mul__(self, right):
         return Complex(self.real * right.real, self.imag * right.imag)
@@ -50,3 +54,5 @@ print(y/x) # Output: (2.0 + 1.6666666666666667i)
 print(y//x) # Output: (2 + 1i)
 print(x%y) # Output: (2 + 3i)
 
+x+=y # iadd
+print(x) # Output: (6 + 8i)
